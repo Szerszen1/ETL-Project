@@ -61,7 +61,7 @@ public class MainParser {
         //liczba linkow
         int liczbaAut = linkList.size();
 
-        for (int i=0;i<=liczbaAut;i++){
+        for (int i=0;i<=liczbaAut-1;i++){
             try {
                 document = Jsoup.parse(new URL(linkList.get(i)), connectionTimeoutMs);
             } catch (IOException e1) {
