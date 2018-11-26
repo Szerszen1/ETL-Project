@@ -53,10 +53,6 @@ public class MainParser {
             next = document.getElementsByAttributeValue("rel","next").attr("href");
         }
 
-        // wyświetlenie linkow
-        for(int i=0;i<=linki.size() -1;i++) {
-            System.out.println(linki.get(i));
-        }
         return linki;
     }
 
@@ -72,19 +68,27 @@ public class MainParser {
                 e1.printStackTrace();
                 System.out.println("ERROR! ERROR!");
             }
-            String[] attribbutes = document.getElementsByClass("offer-params__value").html().split("\n");
+            //pobranie ceny
+            String cenaString = document.getElementsByAttribute("data-price").attr("data-price");
+            cenaString = cenaString.replace(" ","");
+            int cena = Integer.parseInt(cenaString);
 
-            String ofertaOd;
-            String kategoria;
-            String marka;
-            String model;
-            String rokProdukcji;
-            String przebieg;
-            String pojemnoscSkokowa;
-            String rodzajPaliwa;
-            String moc;
-            int cena;
-            String opis;
+            //pobieranie opisu. Do dopracowania !!!!!!!!!!!!!!!!!!!!!!!!!!
+            String opis = document.getElementsByAttributeValue("data-read-more"," ").get(1).html();
+            opis = opis.replace("<br>","");
+
+            String[] attribbutesLinks = document.getElementsByClass("offer-params__link").html().split("\n");
+
+            String ofertaOd = attribbutesLinks[0];
+            String kategoria = attribbutesLinks[1];
+            String marka = attribbutesLinks[2];
+            String model = attribbutesLinks[3];
+            String rokProdukcji = "";
+            String przebieg = "";
+            String pojemnoscSkokowa = "";
+            String rodzajPaliwa = attribbutesLinks[4];
+            String moc = "" ;
+            cars.add(new Car(ofertaOd,kategoria,marka,model,rokProdukcji,przebieg,pojemnoscSkokowa,rodzajPaliwa,moc,cena,opis));
         }
         return cars;
     }

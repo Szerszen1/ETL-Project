@@ -27,6 +27,50 @@ public class Car {
         this.opis = opis;
     }
 
+    public String getOfertaOd() {
+        return ofertaOd;
+    }
+
+    public String getKategoria() {
+        return kategoria;
+    }
+
+    public String getMarka() {
+        return marka;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getRokProdukcji() {
+        return rokProdukcji;
+    }
+
+    public String getPrzebieg() {
+        return przebieg;
+    }
+
+    public String getPojemnoscSkokowa() {
+        return pojemnoscSkokowa;
+    }
+
+    public String getRodzajPaliwa() {
+        return rodzajPaliwa;
+    }
+
+    public String getMoc() {
+        return moc;
+    }
+
+    public int getCena() {
+        return cena;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
     @Override
     public String toString() {
         return "Car{" +
@@ -38,6 +82,9 @@ public class Car {
                 ", przebieg='" + przebieg + '\'' +
                 ", pojemnoscSkokowa='" + pojemnoscSkokowa + '\'' +
                 ", rodzajPaliwa='" + rodzajPaliwa + '\'' +
-                ", moc='" + moc + "' }";
+                ", moc='" + moc + '\'' +
+                ", cena=" + cena +
+                ", opis='" + opis + '\'' +
+                '}';
     }
 }
