@@ -11,9 +11,10 @@ public class Car {
     String moc;
     int cena;
     String opis;
+    String link;
 
 
-    public Car(String ofertaOd, String kategoria, String marka, String model, String rokProdukcji, String przebieg, String pojemnoscSkokowa, String rodzajPaliwa, String moc, int cena, String opis) {
+    public Car(String ofertaOd, String kategoria, String marka, String model, String rokProdukcji, String przebieg, String pojemnoscSkokowa, String rodzajPaliwa, String moc, int cena, String opis, String link) {
         this.ofertaOd = ofertaOd;
         this.kategoria = kategoria;
         this.marka = marka;
@@ -25,6 +26,7 @@ public class Car {
         this.moc = moc;
         this.cena = cena;
         this.opis = opis;
+        this.link = link;
     }
 
     public String getOfertaOd() {
@@ -70,7 +72,11 @@ public class Car {
     public String getOpis() {
         return opis;
     }
-
+    
+    public String getLink() {
+        return link;
+    }
+            
     @Override
     public String toString() {
         return "Car{" +
@@ -85,6 +91,7 @@ public class Car {
                 ", moc='" + moc + '\'' +
                 ", cena=" + cena +
                 ", opis='" + opis + '\'' +
+                ", link='" + link + '\'' +
                 '}';
     }
 }

@@ -5,13 +5,14 @@ import java.util.List;
 
 public class DatabaseConnection {
     static final String JDBC_Driver = "org.mariadb.jdbc.Driver";
-    static final String DB_URL= "jdbc:mariadb://localhost:3306/test2";
+    static final String DB_URL= "jdbc:mariadb://192.168.43.30:3306/test2";
     static final String USER = "root";
     static final String PASS = "kasiadb";
 
     public DatabaseConnection(){}
 
-    public void createDatabase (List<Car> linkList) {
+    public int createDatabase (List<Car> linkList) {
+        int counter = 0;
         Connection co = null;
         Statement st = null;
         List<Car> cars = new ArrayList<Car>();
@@ -24,19 +25,20 @@ public class DatabaseConnection {
             st = co.createStatement();
             // Execute a query
             StringBuilder sb = new StringBuilder();
-            String createTable = "CREATE TABLE CARS (id bigint auto_increment primary key," +
+            String createTable = "CREATE TABLE IF NOT EXISTS cars (id bigint auto_increment primary key," +
                     "ofertaOd varchar(128), kategoria varchar(128), marka varchar(128)," +
                     "model varchar(128), rokProdukcji varchar(128), przebieg varchar(128)," +
                     "pojemnoscSkokowa varchar(128), rodzajPaliwa varchar(128), moc varchar(128)," +
-                    "cena int, opis varchar(128));";
+                    "cena int, opis text, link varchar(255), UNIQUE(link)) CHARACTER SET 'utf8';";
             sb.append(createTable);
-            //stmt.executeUpdate(tmp.toString()); - create only once
+            st.executeUpdate(sb.toString()); //- create only once
 
-            StringBuilder sb2 = new StringBuilder();
+            
 
             for(int i=0; i< linkList.size(); i++) {
+                StringBuilder sb2 = new StringBuilder();
                 String insertData1 = "INSERT INTO cars (ofertaOd, kategoria, marka, model, rokProdukcji, " +
-                      "przebieg, pojemnoscSkokowa, rodzajPaliwa, moc, cena, opis) VALUES(";
+                      "przebieg, pojemnoscSkokowa, rodzajPaliwa, moc, cena, opis, link) VALUES(";
                 sb2.append(insertData1);
                 sb2.append("'" + linkList.get(i).ofertaOd + "',");
                 sb2.append("'" + linkList.get(i).kategoria + "',");
@@ -48,10 +50,18 @@ public class DatabaseConnection {
                 sb2.append("'" + linkList.get(i).rodzajPaliwa + "',");
                 sb2.append("'" + linkList.get(i).moc + "',");
                 sb2.append(linkList.get(i).cena + ",");
-                sb2.append("'" + linkList.get(i).opis + "');");
+                sb2.append("'" + linkList.get(i).opis.replace("'", "''") + "',");
+                sb2.append("'" + linkList.get(i).link + "');");
+                System.out.println(sb2.toString());
+                
+                try{
+                    st.executeUpdate(sb2.toString()); //- create only once
+                    counter ++;
+                }
+                catch (SQLException e) {
+                    System.out.println("SQLException occured");
+                }
             }
-            String allData = sb2.toString();
-            st.executeUpdate(allData);
         }
         catch(SQLException se){
             // Handle errors for JDBC
@@ -73,6 +83,6 @@ public class DatabaseConnection {
                 se.printStackTrace();
             }// end finally try
         }// end try
-
+        return counter;
     }
 }
