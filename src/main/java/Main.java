@@ -16,61 +16,57 @@ public class Main {
         List<String> links = null;
         List<Car> cars = null;
         DatabaseConnection db = null;
-                
+        CsvAndTextFileCreator csv = new CsvAndTextFileCreator();
         System.out.println("What do you want to do? e, t, l or etl?");
         boolean do_e = false;
         boolean do_t = false;
         boolean do_l = false;
-        
+
         boolean e_done = false;
         boolean t_done = false;
         boolean l_done = false;
-        
+
         while ((s = in.readLine()) != null && s.length() != 0) {
-            if(s.contentEquals("e") || s.contentEquals("etl")) {
+            if (s.contentEquals("e") || s.contentEquals("etl")) {
                 do_e = true;
             }
-            if(s.contentEquals("t") || s.contentEquals("etl")) {
+            if (s.contentEquals("t") || s.contentEquals("etl")) {
                 do_t = true;
             }
-            if(s.contentEquals("l") || s.contentEquals("etl")) {
+            if (s.contentEquals("l") || s.contentEquals("etl")) {
                 do_l = true;
             }
-            
+
             if (do_e) {
                 if (e_done) {
                     System.out.println("Extraction already done");
-                }
-                else {
+                } else {
                     html = new MainParser();
                     links = html.getLinks("https://www.otomoto.pl/osobowe/aixam/?search%5Bcountry%5D=");
                     System.out.println("" + links.size() + " Links extracted");
                     e_done = true;
                 }
             }
-            
-            if(!e_done && do_t) {
+
+            if (!e_done && do_t) {
                 System.out.println("Do extraction before");
-            }
-            else if (do_t) {
+            } else if (do_t) {
                 if (t_done) {
                     System.out.println("Transformation already done");
-                }
-                else {
+                } else {
                     cars = html.createCarList(links);
                     System.out.println("" + cars.size() + " Records were transformed");
                     t_done = true;
                 }
+
             }
-            
+
             if (!t_done && do_l) {
                 System.out.println("Do Transformation before");
-            }
-            else if (do_l) {
+            } else if (do_l) {
                 if (l_done) {
                     System.out.println("Load already done");
-                }
-                else {
+                } else {
                     db = new DatabaseConnection();
                     int records = db.createDatabase(cars);
                     System.out.println("" + records + " new records append to database");
@@ -82,14 +78,26 @@ public class Main {
                     html = null;
                     db = null;
                     l_done = true;
+
+
                 }
             }
-            
+
             do_e = false;
             do_t = false;
             do_l = false;
             System.out.println("What do you want to do? e, t, l or etl?");
         }
+        // Question about csv export
+        System.out.println("Do you want to save data to CSV? Type 'yes' if you want to. ");
+        while ((s = in.readLine()) != null && s.length() != 0) {
+            if (s.contentEquals("yes")) {
+                System.out.println("Here will be CSV creation");
+                csv.generateCSV(cars);
 
+            } else {
+                System.out.println("End of work of application");
+            }
+        }
     }
 }
