@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="564.0" y="0.0">MainParser</node>
+    <node x="0.0" y="0.0">Car</node>
+    <node x="0.0" y="648.0">DatabaseConnection</node>
+    <node x="271.0" y="648.0">Main</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="208.00000000000006" y="379.99999999999994" />
+  <SelectedNodes>
+    <node>Car</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

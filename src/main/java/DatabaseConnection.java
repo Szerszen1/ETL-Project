@@ -5,7 +5,7 @@ import java.util.List;
 
 public class DatabaseConnection {
     static final String JDBC_Driver = "org.mariadb.jdbc.Driver";
-    static final String DB_URL= "jdbc:mariadb://192.168.43.30:3306/test2";
+    static final String DB_URL= "jdbc:mariadb://localhost:3306/test3";
     static final String USER = "root";
     static final String PASS = "kasiadb";
 
