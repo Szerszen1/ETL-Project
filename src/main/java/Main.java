@@ -17,14 +17,16 @@ public class Main {
         List<Car> cars = null;
         DatabaseConnection db = null;
         CsvAndTextFileCreator csv = new CsvAndTextFileCreator();
-        System.out.println("What do you want to do? e, t, l or etl?");
+        System.out.println("What do you want to do? e, t, l, etl or clean up (c) database?");
         boolean do_e = false;
         boolean do_t = false;
         boolean do_l = false;
+        boolean do_c = false;
 
         boolean e_done = false;
         boolean t_done = false;
         boolean l_done = false;
+        boolean c_done = false;
 
         while ((s = in.readLine()) != null && s.length() != 0) {
             if (s.contentEquals("e") || s.contentEquals("etl")) {
@@ -36,7 +38,15 @@ public class Main {
             if (s.contentEquals("l") || s.contentEquals("etl")) {
                 do_l = true;
             }
+            if (s.contentEquals("c")) {
+                do_c = true;
+            }
 
+            if (do_c){
+                new DatabaseConnection().cleanDatabase();
+                System.out.println("Dates deleted");
+            }
+            
             if (do_e) {
                 if (e_done) {
                     System.out.println("Extraction already done");
@@ -70,14 +80,24 @@ public class Main {
                     db = new DatabaseConnection();
                     int records = db.createDatabase(cars);
                     System.out.println("" + records + " new records append to database");
-                    e_done = false;
-                    t_done = false;
+                        // Question about csv export
+                        System.out.println("Do you want to save data to CSV? Type 'yes' if you want to. ");
+                        while ((s = in.readLine()) != null && s.length() != 0) {
+                            if (s.contentEquals("yes")) {
+                                System.out.println("Here will be CSV creation. ENTER to continue");
+                                csv.generateCSV(cars);
+
+                            } else {
+                                System.out.println("CSV do not created. ENTER to continue");
+                            }
+                        }
+                    e_done = false; //usuwanie produktów ubocznych procesu
+                    t_done = false; 
                     l_done = false;
                     cars = null;
                     links = null;
                     html = null;
                     db = null;
-                    l_done = true;
 
 
                 }
@@ -86,18 +106,9 @@ public class Main {
             do_e = false;
             do_t = false;
             do_l = false;
-            System.out.println("What do you want to do? e, t, l or etl?");
+            do_c = false;
+            System.out.println("What do you want to do? e, t, l, etl or clean up (c) database?");
         }
-        // Question about csv export
-        System.out.println("Do you want to save data to CSV? Type 'yes' if you want to. ");
-        while ((s = in.readLine()) != null && s.length() != 0) {
-            if (s.contentEquals("yes")) {
-                System.out.println("Here will be CSV creation");
-                csv.generateCSV(cars);
 
-            } else {
-                System.out.println("End of work of application");
-            }
-        }
     }
 }

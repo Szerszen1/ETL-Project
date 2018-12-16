@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainParser {
-
-    String Url = "https://www.otomoto.pl/osobowe/aixam/?search%5Bcountry%5D=";
     int connectionTimeoutMs = 10000; //10s
     List<String> linki = new ArrayList<String>();
     Document document;
