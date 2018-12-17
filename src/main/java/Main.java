@@ -54,7 +54,6 @@ public class Main {
                 new DatabaseConnection().cleanDatabase();
                 System.out.println("Dates deleted");
             }
-            
 
             
             if (do_e) {
@@ -94,14 +93,16 @@ public class Main {
                         System.out.println("Do you want to save data to CSV? Type 'yes' if you want to. ");
                         while ((s = in.readLine()) != null && s.length() != 0) {
                             if (s.contentEquals("yes")) {
-                                System.out.println("Here will be CSV creation. ENTER to continue");
+                                System.out.println("Here will be CSV creation.");
                                 csv.generateCSV(cars);
-
-                            } else {
-                                System.out.println("CSV do not created. ENTER to continue");
+                                System.out.println("Do you want to save data in text file? Type 'yes' if you want to.");
+                            } else if(s.contentEquals("yes")){
+                                csv.generateText(cars);
+                            }else {
+                                System.out.println("File not created. ENTER to continue");
                             }
                         }
-                    e_done = false; //usuwanie produktów ubocznych procesu
+                    e_done = false; //usuwanie produktï¿½w ubocznych procesu
                     t_done = false; 
                     l_done = false;
                     cars = null;
