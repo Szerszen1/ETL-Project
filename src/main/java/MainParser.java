@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainParser {
-
-    String Url = "https://www.otomoto.pl/osobowe/aixam/?search%5Bcountry%5D=";
     int connectionTimeoutMs = 10000; //10s
     List<String> linki = new ArrayList<String>();
     Document document;
@@ -21,7 +19,6 @@ public class MainParser {
             document = Jsoup.parse(new URL(link), connectionTimeoutMs);
         } catch (IOException e1) {
             e1.printStackTrace();
-            System.out.println(document.toString());
         }
         // wyciaganie linkow ze strony
         liczbaLinkow = document.getElementsByClass("offer-title__link").size();
@@ -62,24 +59,44 @@ public class MainParser {
         int liczbaAut = linkList.size();
 
         for (int i=0;i<=liczbaAut-1;i++){
+            String link = linkList.get(i);
             try {
-                document = Jsoup.parse(new URL(linkList.get(i)), connectionTimeoutMs);
+                document = Jsoup.parse(new URL(link), connectionTimeoutMs);
             } catch (IOException e1) {
                 e1.printStackTrace();
                 System.out.println("ERROR! ERROR!");
+                continue;
             }
             //pobranie ceny
+            int cena;
             String cenaString = document.getElementsByAttribute("data-price").attr("data-price");
             cenaString = cenaString.replace(" ","");
-            int cena = Integer.parseInt(cenaString);
-
-            //pobieranie opisu. Do dopracowania !!!!!!!!!!!!!!!!!!!!!!!!!!
-            String opis = document.getElementsByAttributeValue("data-read-more"," ").get(1).html();
-            opis = opis.replace("<br>","");
+            if (cenaString == ""){
+                cena = 0;
+            } else {
+                cena = Integer.parseInt(cenaString);
+            }
+            
+            String opis;
+            try {
+            
+            //pobieranie opisu. 
+                opis = document.getElementsByAttributeValue("data-read-more"," ").get(1).html();
+       
+                opis = opis.replace("<br>","");
+            }
+            catch (IndexOutOfBoundsException e) {
+                System.out.println("Out of bound exception for description: " + link);
+                continue;
+            }
 
             String[] attribbutesLinks = document.getElementsByClass("offer-params__link").html().split("\n");
 
             String ofertaOd = attribbutesLinks[0];
+            if (attribbutesLinks.length < 2){
+                System.out.println(link);
+                continue;
+            }
             String kategoria = attribbutesLinks[1];
             String marka = attribbutesLinks[2];
             String model = attribbutesLinks[3];
@@ -88,7 +105,8 @@ public class MainParser {
             String pojemnoscSkokowa = "";
             String rodzajPaliwa = attribbutesLinks[4];
             String moc = "" ;
-            cars.add(new Car(ofertaOd,kategoria,marka,model,rokProdukcji,przebieg,pojemnoscSkokowa,rodzajPaliwa,moc,cena,opis));
+
+            cars.add(new Car(ofertaOd,kategoria,marka,model,rokProdukcji,przebieg,pojemnoscSkokowa,rodzajPaliwa,moc,cena,opis,link));
         }
         return cars;
     }
