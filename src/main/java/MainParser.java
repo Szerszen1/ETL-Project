@@ -80,13 +80,13 @@ public class MainParser {
             String opis;
             try {
             
-            //pobieranie opisu. Do dopracowania !!!!!!!!!!!!!!!!!!!!!!!!!!
+            //pobieranie opisu. 
                 opis = document.getElementsByAttributeValue("data-read-more"," ").get(1).html();
        
                 opis = opis.replace("<br>","");
             }
             catch (IndexOutOfBoundsException e) {
-                System.out.println("Out of bund exception for description: " + link);
+                System.out.println("Out of bound exception for description: " + link);
                 continue;
             }
 

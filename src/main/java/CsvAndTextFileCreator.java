@@ -42,7 +42,7 @@ public class CsvAndTextFileCreator {
             }
             printWriter.write(sb.toString());
             printWriter.close();
-            System.out.println("Finished");
+
         } catch(FileNotFoundException e){
                 e.printStackTrace();
             }

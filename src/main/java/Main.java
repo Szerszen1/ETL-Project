@@ -17,16 +17,24 @@ public class Main {
         List<Car> cars = null;
         DatabaseConnection db = null;
         CsvAndTextFileCreator csv = new CsvAndTextFileCreator();
+        
+        String givenLink;
+        String link;
+        
+        System.out.println("Enter a link:");
+        
+        while ((givenLink = in.readLine()) != null && givenLink.length() == 0){
+        }
+        
         System.out.println("What do you want to do? e, t, l, etl or clean up (c) database?");
         boolean do_e = false;
         boolean do_t = false;
         boolean do_l = false;
         boolean do_c = false;
-
+        
         boolean e_done = false;
         boolean t_done = false;
         boolean l_done = false;
-        boolean c_done = false;
 
         while ((s = in.readLine()) != null && s.length() != 0) {
             if (s.contentEquals("e") || s.contentEquals("etl")) {
@@ -47,12 +55,14 @@ public class Main {
                 System.out.println("Dates deleted");
             }
             
+
+            
             if (do_e) {
                 if (e_done) {
                     System.out.println("Extraction already done");
                 } else {
                     html = new MainParser();
-                    links = html.getLinks("https://www.otomoto.pl/osobowe/aixam/?search%5Bcountry%5D=");
+                    links = html.getLinks(givenLink);
                     System.out.println("" + links.size() + " Links extracted");
                     e_done = true;
                 }
@@ -101,12 +111,23 @@ public class Main {
 
 
                 }
+       System.out.println("Enter a link:");
+        
+        givenLink = in.readLine();
+        
+        if (givenLink.length() > 0) {
+            link=givenLink;
+        }
             }
 
             do_e = false;
             do_t = false;
             do_l = false;
             do_c = false;
+           
+
+
+        
             System.out.println("What do you want to do? e, t, l, etl or clean up (c) database?");
         }
 
