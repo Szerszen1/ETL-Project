@@ -9,6 +9,7 @@ public class CsvAndTextFileCreator {
         List<Car> cars = new ArrayList<Car>();
         try {
             PrintWriter printWriter = new PrintWriter(new File("test.csv"));
+            PrintWriter printWriterText = new PrintWriter(new File("test.txt"));
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < linkList.size(); i++) {
@@ -41,11 +42,53 @@ public class CsvAndTextFileCreator {
                 sb.append('\n');
             }
             printWriter.write(sb.toString());
+            printWriterText.write(sb.toString());
             printWriter.close();
-
+            System.out.println("Finished");
         } catch(FileNotFoundException e){
                 e.printStackTrace();
             }
         }
+    public void generateText (List<Car> linkList) {
+        List<Car> cars = new ArrayList<Car>();
+        try {
+            PrintWriter printWriterText = new PrintWriter(new File("test.txt"));
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < linkList.size(); i++) {
+                sb.append("ofertaOd");
+                sb.append(linkList.get(i).ofertaOd);
+                sb.append(", kategoria");
+                sb.append(linkList.get(i).kategoria);
+                sb.append(", marka");
+                sb.append(linkList.get(i).marka);
+                sb.append(", model");
+                sb.append(linkList.get(i).model);
+                sb.append(", rokProdukcji");
+                sb.append(linkList.get(i).rokProdukcji);
+                sb.append(", przebieg");
+                sb.append(linkList.get(i).przebieg);
+                sb.append(", pojemnoscSkokowa");
+                sb.append(linkList.get(i).pojemnoscSkokowa);
+                sb.append(", rodzajPaliwa");
+                sb.append(linkList.get(i).rodzajPaliwa);
+                sb.append(", moc");
+                sb.append(linkList.get(i).moc);
+                sb.append(", cena");
+                sb.append(linkList.get(i).cena);
+                sb.append(", opis");
+                sb.append(linkList.get(i).opis.replace("'", "''"));
+                sb.append(", link");
+                sb.append(linkList.get(i).link);
+                sb.append('\n');
+            }
+            printWriterText.write(sb.toString());
+            printWriterText.close();
+            System.out.println("Finished");
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
+}
+
 
