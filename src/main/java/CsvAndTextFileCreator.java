@@ -44,7 +44,7 @@ public class CsvAndTextFileCreator {
             printWriter.write(sb.toString());
             printWriterText.write(sb.toString());
             printWriter.close();
-            System.out.println("Finished");
+
         } catch(FileNotFoundException e){
                 e.printStackTrace();
             }
@@ -84,7 +84,7 @@ public class CsvAndTextFileCreator {
             }
             printWriterText.write(sb.toString());
             printWriterText.close();
-            System.out.println("Finished");
+
         } catch(FileNotFoundException e){
             e.printStackTrace();
         }
